@@ -17,6 +17,7 @@
         }
     },
     "require": {
+        "laravel/framework": "5.3.*",
         "lavary/laravel-menu": "^1.6"
     },
     "suggest": {
