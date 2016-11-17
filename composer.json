@@ -3,6 +3,7 @@
     "description": "lavary menu system in database",
     "type": "library",
     "license": "MIT",
+    "keywords": ["laravel", "menu", "lavary"],
     "authors": [
         {
             "name": "Balazs Szabo",
@@ -12,5 +13,8 @@
     "minimum-stability": "dev",
     "require": {
         "lavary/laravel-menu": "^1.6"
+    },
+    "suggest": {
+        "santigarcor/laratrust": "Add permissions to menuitems"
     }
 }
