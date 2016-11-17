@@ -11,6 +11,11 @@
         }
     ],
     "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Hobord\\MenuDb\\": "src"
+        }
+    },
     "require": {
         "lavary/laravel-menu": "^1.6"
     },
