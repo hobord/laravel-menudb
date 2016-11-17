@@ -1,0 +1,16 @@
+{
+    "name": "hobord/menu_db",
+    "description": "lavary menu system in database",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Balazs Szabo",
+            "email": "balazs.szabo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "lavary/laravel-menu": "^1.6"
+    }
+}
