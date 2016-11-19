@@ -23,9 +23,8 @@ class MenuDbMiddleware
     public function handle($request, Closure $next)
     {
         $app = App::getFacadeApplication();
-        $user = Auth::user();
 
-        if($user) {
+        if(Auth::check()) {
             $cached_menu = $request->session()->get('hobord_menu');
         }
         else {
@@ -41,11 +40,11 @@ class MenuDbMiddleware
 
         $this->makeMenus();
 
-        if($user) {
+        if(Auth::check()) {
             $request->session()->set('hobord_menu', $app['menu']);
         }
         else {
-            Cache::forever('menu', $app['menu']);
+            Cache::forever('hobord_menu', $app['menu']);
         }
 
         return $next($request);

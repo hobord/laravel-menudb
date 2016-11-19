@@ -3,6 +3,9 @@
 namespace Hobord\MenuDb;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
+use Cache;
+use Session;
 
 class Menu extends Model
 {
@@ -13,8 +16,22 @@ class Menu extends Model
      */
     protected $table = 'hobord_menus';
 
+    protected $fillable = [
+        'machine_name',
+        'display_name',
+        'description',
+        'lang'
+    ];
+
     public function items()
     {
         return $this->hasMany('Hobord\MenuDb\MenuItem');
     }
+
+    static public function refresh()
+    {
+        Session::forget('hobord_menu');
+        Cache::forever('hobord_menu', $app['menu']);
+    }
+
 }

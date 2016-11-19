@@ -18,6 +18,17 @@ class MenuItem extends Model
         'meta_data' => 'json'
     ];
 
+    protected $fillable = [
+        'menu_id',
+        'parent_id',
+        'unique_name',
+        'weight',
+        'menu_text',
+        'parameters',
+        'divide',
+        'meta_data'
+    ];
+
     public function menu()
     {
         return $this->belongsTo('Hobord\MenuDb\Menu');
