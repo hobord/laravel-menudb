@@ -37,6 +37,8 @@ class MenuDbMiddleware
 
             return $next($request);
         }
+//        $request->session()->forget('hobord_menu');
+//        Cache::forget('hobord_menu');
 
         $this->makeMenus();
 
@@ -87,7 +89,7 @@ class MenuDbMiddleware
             }
 
             if($can_access) {
-                $new_item = $to->add($item->menu_text, $item->parameters);
+                $new_item = $to->add($item->menu_text, $item->parameters)->nickname($item->unique_name);
                 $new_item->data($item->meta_data);
                 $this->addItems($new_item, $sub_items, $all_items);
             }

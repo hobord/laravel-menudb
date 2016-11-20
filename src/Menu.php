@@ -31,7 +31,7 @@ class Menu extends Model
     static public function refresh()
     {
         Session::forget('hobord_menu');
-        Cache::forever('hobord_menu', $app['menu']);
+        Cache::forget('hobord_menu');
     }
 
 }
