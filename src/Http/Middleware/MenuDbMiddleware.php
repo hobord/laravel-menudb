@@ -31,18 +31,19 @@ class MenuDbMiddleware
 //        Cache::forget('hobord_menu');
         $cached_menu = Session::get('hobord_menu');
 
-        if($cached_menu==null && Auth::check()) {
+        if( !Auth::check() ) {
+            $cached_menu = Cache::get('hobord_menu');
+        }
+        elseif( $cached_menu == null ) {
             $this->makeMenus();
             return $next($request);
         }
-        elseif(!Auth::check()) {
-            $cached_menu = Cache::get('hobord_menu');
-        }
 
-        if($cached_menu!=null) {
+        if( $cached_menu != null ) {
             $app = App::getFacadeApplication();
             $app->instance('menu', $cached_menu);
             $app['menu'] = $cached_menu;
+
             return $next($request);
         }
 
