@@ -7,11 +7,14 @@ use Hobord\MenuDb\Menu as MenuDB;
 use Menu;
 use Auth;
 use Cache;
+use Session;
+
 
 Use Illuminate\Support\Facades\App;
 
 class MenuDbMiddleware
 {
+
     /**
      * Handle the incoming request.
      *
@@ -24,32 +27,26 @@ class MenuDbMiddleware
     {
 //        $this->makeMenus();
 //        return $next($request);
+//        $request->session()->forget('hobord_menu');
+//        Cache::forget('hobord_menu');
+        $cached_menu = Session::get('hobord_menu');
 
-        $app = App::getFacadeApplication();
-
-        if(Auth::check()) {
-            $cached_menu = $request->session()->get('hobord_menu');
+        if($cached_menu==null && Auth::check()) {
+            $this->makeMenus();
+            return $next($request);
         }
-        else {
+        elseif(!Auth::check()) {
             $cached_menu = Cache::get('hobord_menu');
         }
 
         if($cached_menu!=null) {
+            $app = App::getFacadeApplication();
             $app->instance('menu', $cached_menu);
             $app['menu'] = $cached_menu;
             return $next($request);
         }
-//        $request->session()->forget('hobord_menu');
-//        Cache::forget('hobord_menu');
 
         $this->makeMenus();
-
-        if(Auth::check()) {
-            $request->session()->set('hobord_menu', $app['menu']);
-        }
-        else {
-            Cache::forever('hobord_menu', $app['menu']);
-        }
 
         return $next($request);
     }
@@ -66,6 +63,14 @@ class MenuDbMiddleware
             })->sortBy('weight');
 
             $this->addItems($menu, $items, $menu_record->items->sortBy('weight'));
+        }
+
+        $app = App::getFacadeApplication();
+        if(Auth::check()) {
+            Session::set('hobord_menu', $app['menu']);
+        }
+        else {
+            Cache::forever('hobord_menu', $app['menu']);
         }
     }
 

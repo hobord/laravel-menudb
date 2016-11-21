@@ -12,13 +12,15 @@ class MenuDbServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\Illuminate\Contracts\Http\Kernel $kernel)
+    public function boot(\Illuminate\Routing\Router $router, \Illuminate\Contracts\Http\Kernel $kernel)
     {
         $this->publishes([
             __DIR__.'/database/migrations' => database_path('migrations'),
         ], 'migrations');
 
-        $kernel->pushMiddleware(MenuDbMiddleware::class);
+//        $kernel->pushMiddleware(MenuDbMiddleware::class);
+//        $kernel->prependMiddleware(MenuDbMiddleware::class);
+        $router->pushMiddlewareToGroup('web', MenuDbMiddleware::class);
     }
 
     /**
