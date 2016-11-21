@@ -22,6 +22,9 @@ class MenuDbMiddleware
      */
     public function handle($request, Closure $next)
     {
+//        $this->makeMenus();
+//        return $next($request);
+
         $app = App::getFacadeApplication();
 
         if(Auth::check()) {
@@ -31,10 +34,9 @@ class MenuDbMiddleware
             $cached_menu = Cache::get('hobord_menu');
         }
 
-        if($cached_menu) {
+        if($cached_menu!=null) {
             $app->instance('menu', $cached_menu);
             $app['menu'] = $cached_menu;
-
             return $next($request);
         }
 //        $request->session()->forget('hobord_menu');
