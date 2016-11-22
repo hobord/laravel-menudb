@@ -87,6 +87,7 @@ class MenuDbMiddleware
             }
 
             $can_access = true;
+
             if( is_array($item->meta_data) && array_key_exists('permission',$item->meta_data) ) {
                 if(!$user || !$user->can($item->meta_data['permission'])) {
                     $can_access = false;

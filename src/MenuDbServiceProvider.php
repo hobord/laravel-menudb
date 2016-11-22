@@ -21,6 +21,7 @@ class MenuDbServiceProvider extends ServiceProvider
 //        $kernel->pushMiddleware(MenuDbMiddleware::class);
 //        $kernel->prependMiddleware(MenuDbMiddleware::class);
         $router->pushMiddlewareToGroup('web', MenuDbMiddleware::class);
+        $this->setupRoutes($router);
     }
 
     /**
@@ -33,4 +34,22 @@ class MenuDbServiceProvider extends ServiceProvider
         //
     }
 
+    /**
+     * Define the routes for the application.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
+    public function setupRoutes($router)
+    {
+        $router->group(['namespace' => 'Hobord\MenuDb\Http\Controllers'], function($router) {
+
+            $router->group([
+                'middleware' => 'api',
+            ], function ($router) {
+                include __DIR__.'/routes/api.php';
+            });
+
+        });
+    }
 }
