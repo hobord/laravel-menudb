@@ -25,14 +25,11 @@ class MenuDbMiddleware
      */
     public function handle($request, Closure $next)
     {
-//        $this->makeMenus();
-//        return $next($request);
-//        $request->session()->forget('hobord_menu');
-//        Cache::forget('hobord_menu');
-        $cached_menu = Session::get('hobord_menu');
+
+        $cached_menu = unserialize(Session::get('hobord_menu'));
 
         if( !Auth::check() ) {
-            $cached_menu = Cache::get('hobord_menu');
+            $cached_menu = unserialize(Cache::get('hobord_menu'));
         }
         elseif( $cached_menu == null ) {
             $this->makeMenus();
@@ -41,9 +38,8 @@ class MenuDbMiddleware
 
         if( $cached_menu != null ) {
             $app = App::getFacadeApplication();
-            $app->instance('menu', $cached_menu);
+            $app->instance('menu',null);
             $app['menu'] = $cached_menu;
-
             return $next($request);
         }
 
@@ -67,11 +63,12 @@ class MenuDbMiddleware
         }
 
         $app = App::getFacadeApplication();
+
         if(Auth::check()) {
-            Session::set('hobord_menu', $app['menu']);
+            Session::set('hobord_menu',  serialize($app['menu']));
         }
         else {
-            Cache::forever('hobord_menu', $app['menu']);
+            Cache::forever('hobord_menu', serialize($app['menu']));
         }
     }
 
