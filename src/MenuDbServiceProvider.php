@@ -45,9 +45,9 @@ class MenuDbServiceProvider extends ServiceProvider
         $router->group(['namespace' => 'Hobord\MenuDb\Http\Controllers'], function($router) {
 
             $router->group([
-                'middleware' => 'api',
+                'middleware' => 'web',
             ], function ($router) {
-                include __DIR__.'/routes/api.php';
+                include __DIR__.'/routes/web.php';
             });
 
         });
