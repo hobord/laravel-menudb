@@ -42,6 +42,7 @@ class MenuDbServiceProvider extends ServiceProvider
      */
     public function setupRoutes($router)
     {
+
         $router->group(['namespace' => 'Hobord\MenuDb\Http\Controllers'], function($router) {
 
             $router->group([

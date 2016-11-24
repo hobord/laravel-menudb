@@ -46,4 +46,10 @@ class MenuItem extends Model
             $this->parent_id = $parent->id;
         }
     }
+
+    public function save(array $options = [])
+    {
+        parent::save($options);
+        Menu::refresh();
+    }
 }
