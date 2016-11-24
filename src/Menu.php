@@ -16,6 +16,8 @@ class Menu extends Model
      */
     protected $table = 'hobord_menus';
 
+    public $timestamps = true;
+
     protected $fillable = [
         'machine_name',
         'display_name',
@@ -34,4 +36,9 @@ class Menu extends Model
         Cache::forget('hobord_menu');
     }
 
+    public function save(array $options = [])
+    {
+        parent::save($options);
+        Menu::refresh();
+    }
 }

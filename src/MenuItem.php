@@ -13,6 +13,10 @@ class MenuItem extends Model
      */
     protected $table = 'hobord_menu_items';
 
+    public $timestamps = true;
+
+    protected $touches = ['menu'];
+
     protected $casts = [
         'parameters' => 'json',
         'meta_data' => 'json'
@@ -31,7 +35,7 @@ class MenuItem extends Model
 
     public function menu()
     {
-        return $this->belongsTo('Hobord\MenuDb\Menu');
+        return $this->belongsTo('Hobord\MenuDb\Menu','menu_id');
     }
 
     public function parent()
