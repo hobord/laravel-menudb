@@ -93,7 +93,11 @@ class MenuDbMiddleware
                     $can_access = false;
                 }
             }
-
+            if( is_array($item->meta_data) && array_key_exists('role',$item->meta_data) ) {
+                if (!$user || !$user->hasRole($item->meta_data['role'])) {
+                    $can_access = false;
+                }
+            }
             if($can_access) {
                 $new_item = $to->add($item->menu_text, $item->parameters)->nickname($item->unique_name);
                 $new_item->data($item->meta_data);

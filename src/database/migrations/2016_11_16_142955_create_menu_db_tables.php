@@ -32,7 +32,7 @@ class CreateMenuDbTables extends Migration
             $table->string('menu_text')->nullable();
             $table->json('parameters');
 
-            $table->boolean('divide')->default(false);
+//            $table->boolean('divide')->default(false);
             $table->json('meta_data')->nullable();
 
             $table->timestamps();
